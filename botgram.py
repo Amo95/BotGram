@@ -7,11 +7,21 @@ import subprocess
 import getpass
 
 
+def info():
+    """Code by DummyCoder
+    Instagram: dummycod3r
+    Twitter: @dummyCod3r_
+    Github: amo95
+    """
+
+    print(info.__doc__)
+
 def print_same_line(text):
-    sys.stdout.write('\r')
-    sys.stdout.flush()
-    sys.stdout.write(text)
-    sys.stdout.flush()
+    while True:
+        sys.stdout.write('\r')
+        sys.stdout.flush()
+        sys.stdout.write(text)
+        sys.stdout.flush()
 
 def spin():
         while True:
@@ -29,50 +39,58 @@ def start_spin():
 
 
 def main():
-        opt = ["Login", "Close/Logout Browser", "Help", "Quit"]
+    info()
 
-        for num, op in enumerate(opt, start=1):
-            print(f"[{num}] {op}")
+    opt = ["Login", "Close/Logout Browser", "Help", "Quit"]
 
-        print("\nEnter option: ", end=" ")
-        option = int(input())
+    for num, op in enumerate(opt, start=1):
+        print(f"[{num}] {op}")
 
-        if option == (opt.index("Login") + 1):
-            print(f"\n{Color.BOLD}Login{Color.END}")
-            username = input("Username: ")
-            password = getpass.getpass("Password: ")
+    print("\nEnter option: ", end=" ")
+    option = int(input())
 
-            print("Wait a moment", end=" ")
-            start_spin()
+    if option == (opt.index("Login") + 1):
 
-            hasht = input("\nEnter hashtag/s (separate multiple tags with space): ")
-            hasht_split = hasht.split(" ")
-            hashtags = hasht_split[:]
+        if sys.platform == "linux" or sys.platform == "linux2":
+            subprocess.call("clear", shell=True)
+        else:
+            subprocess.call("cls", shell=True)
+
+        print(f"\n{Color.BOLD}Login{Color.END}")
+        username = input("Username: ")
+        password = getpass.getpass("Password: ")
+
+        print("Wait a moment", end=" ")
+        start_spin()
+
+        hasht = input("\nEnter hashtag/s (separate multiple tags with space): ")
+        hasht_split = hasht.split(" ")
+        hashtags = hasht_split[:]
 
 
-            ig = InstagramBot(username, password)
-            ig.login()
+        ig = InstagramBot(username, password)
+        ig.login()
 
 
-            while True:
-                try:
-                    # Choose a random tag from the list of tags
-                    tag = random.choice(hashtags)
-                    ig.like_photo(tag)
+        while True:
+            try:
+                # Choose a random tag from the list of tags
+                tag = random.choice(hashtags)
+                ig.like_photo(tag)
 
-                except Exception:
-                    ig.closeBrowser()
-                    time.sleep(60)
-                    ig = InstagramBot(username, password)
-                    ig.login()
+            except Exception:
+                ig.closeBrowser()
+                time.sleep(60)
+                ig = InstagramBot(username, password)
+                ig.login()
 
-        elif option == (opt.index("Close/Logout Browser") + 1):
-            pass
+    elif option == (opt.index("Close/Logout Browser") + 1):
+        pass
 
-        elif option == (opt.index("Help") + 1):
-            pass
-        elif option == (opt.index("Quit") + 1):
-            InstagramBot.quit()
+    elif option == (opt.index("Help") + 1):
+        pass
+    elif option == (opt.index("Quit") + 1):
+        InstagramBot.quit()
 
 
 
@@ -89,7 +107,7 @@ class Color(object):
     END = '\033[0m'
 
 
-class InstagramBot:
+class InstagramBot(object):
 
     def __init__(self, username, password):
         self.username = username
@@ -191,4 +209,8 @@ class InstagramBot:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except:
+        sys.stdout()
+        InstagramBot.quit()
