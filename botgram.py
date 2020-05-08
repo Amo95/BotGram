@@ -5,7 +5,7 @@ import random
 import sys
 import subprocess
 import getpass
-
+import os
 
 def info():
     """Code by DummyCoder
@@ -39,6 +39,7 @@ def start_spin():
 
 
 def main():
+    os.system("clear")
     info()
 
     opt = ["Login", "Close/Logout Browser", "Help", "Quit"]
@@ -85,7 +86,8 @@ def main():
                 ig.login()
 
     elif option == (opt.index("Close/Logout Browser") + 1):
-        pass
+        print("Closing Browser")
+        InstagramBot.closeBrowser()
 
     elif option == (opt.index("Help") + 1):
         pass
@@ -117,7 +119,7 @@ class InstagramBot(object):
         if sys.platform == "linux" or sys.platform == "linux2":
             self.driver = webdriver.Firefox()
         else:
-            self.driver = webdriver.Chrome()
+            self.driver = webdriver.chrome()
 
     def closeBrowser(self):
         self.driver.close()
@@ -212,5 +214,17 @@ if __name__ == "__main__":
     try:
         main()
     except:
-        sys.stdout()
-        InstagramBot.quit()
+        sys.stdout.write("\nWrong entry, do you want to quit? y/n: ")
+        entry = input()
+        string = ["YES", "NO"]
+
+        if (entry == string[0] or entry == string[0][0] or
+            entry == string[0][0].lower() or entry == string[0].capitalize()
+            or entry == string[0].lower()):
+            InstagramBot.quit()
+        elif (entry == string[1] or entry == string[1][0] or
+            entry == string[1][0].lower() or entry == string[1].capitalize()
+            or entry == string[1].lower()):
+            main()
+        else:
+            InstagramBot.quit()
