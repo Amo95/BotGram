@@ -1,4 +1,4 @@
-# GramBot
+# BotGram
 ### Note:
 ```bash
 Instagram bot with selenium (both chrome and Firefox) and its linux and windows compatible
